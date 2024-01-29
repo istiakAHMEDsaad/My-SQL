@@ -1,0 +1,92 @@
+QUES TO THE ANSWER NO.1
+****database create****
+CREATE DATABASE bubt;
+ 
+***create student table***
+CREATE TABLE grades
+(
+    student_id int,
+    gpa double(3,2),
+    semester varchar(10)
+);
+ 
+****create table student****
+CREATE TABLE student
+(
+    id int,
+    name varchar(10),
+    age int,
+    blood_group varchar(10),
+    department_name varchar(10),
+    mobile_number varchar(20),
+    CONSTRAINT pk_student PRIMARY KEY(id)
+);
+ 
+QUES TO THE ANSWER NO.2
+We can't assign student_id as the primary key of the grades table.
+because primary key must have the unique number.but in grade table 
+there are many same id in stdent_id row.
+ 
+ 
+QUES TO THE ANSWER NO.3
+****insert info in grades table****
+INSERT INTO grades
+VALUES
+(1,3.75,'summer'),
+(1,2.75,'winter'),
+(2,3.30,'summer'),
+(3,3.60,'summer'),
+(2,3.96,'winter'),
+(4,4.00,'summer'),
+(5,2.99,'winter');
+ 
+****INSERT INFO IN STUDENT TABLE****
+INSERT INTO student
+VALUES
+(1,'tamim',23,'A+ve','CSE','01412345678'),
+(2,'kayes',22,'B-ve','EEE','01912345679'),
+(3,'MOMINUL',20,'AB+ve','MCE','01912345680'),
+(4,'sakib',24,'O+ve','CSE','01912345681'),
+(5,'mushfiq',24,'O+ve','CSE','01912345682');
+ 
+****show data for grades****
+SELECT student_id,gpa,semester
+FROM grades;
+ 
+****show data for student****
+SELECT id,name,age,blood_group,department_name,mobile_number
+FROM student;
+ 
+****1. NAME FROM CSE DEPARTMENT****
+SELECT name
+FROM student
+WHERE department_name = 'CSE'
+ 
+****2. NAME,AGE,BLOOD_GROUP FROM STUDENT TABLE****
+SELECT name,age,blood_group
+FROM student
+ 
+****3. DISTINT KEY WORD...DEPARTMENT NAME FROM STUDENT****
+SELECT DISTINCT department_name
+FROM student
+ 
+****3. rename****
+SELECT department_name AS dept_name
+FROM student
+ 
+****4. cartesian product****
+SELECT* FROM student,grades
+ 
+****5. student id who is from summer sem and gpa is grater than 3.50****
+SELECT student_id
+FROM grades
+WHERE semester='summer' AND gpa>3.40;
+
+****6. update mobile_number of tamim****
+UPDATE student
+SET mobile_number = '0111234568'
+WHERE name = 'tamim';
+
+****7. delete student from MCE department****
+DELETE FROM student 
+WHERE department_name = 'MCE';
