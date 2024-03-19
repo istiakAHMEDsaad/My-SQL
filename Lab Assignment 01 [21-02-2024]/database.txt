@@ -1,6 +1,6 @@
 ***Task 1***
 
-*--craete table--*
+*--create table--*
 1.List all the values stored in the CITIZEN table.
 
 CREATE DATABASE bangladesh;
