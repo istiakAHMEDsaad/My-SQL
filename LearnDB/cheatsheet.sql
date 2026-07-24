@@ -36,5 +36,10 @@ VALUES (6, "Sheldon", "Plankton");
 ------------------------ SELECT ------------------------
 SELECT * FROM employees;
 SELECT first_name, last_name FROM employees;
-
+SELECT * FROM employees WHERE hourly_pay >= 15;
 SELECT * FROM employees WHERE employee_id = 1
+
+------------------------ UPDATE & DELETE ------------------------
+UPDATE employees SET hourly_pay = 18, hire_date = "2013-06-25"  WHERE employee_id = 5;
+DELETE FROM employees WHERE employee_id = 6;
+
