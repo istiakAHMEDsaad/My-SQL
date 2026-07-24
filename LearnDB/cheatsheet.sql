@@ -43,3 +43,31 @@ SELECT * FROM employees WHERE employee_id = 1
 UPDATE employees SET hourly_pay = 18, hire_date = "2013-06-25"  WHERE employee_id = 5;
 DELETE FROM employees WHERE employee_id = 6;
 
+------------------------ Auto Commit ------------------------
+SET AUTOCOMMIT = OFF; --(turned off auto commit first)--
+COMMIT; --(commit to save the stage)--
+ROLLBACK; --(if we delete something it will undo)--
+
+------------------------ Date & Time ------------------------
+CREATE TABLE test(
+	my_date DATE,
+	my_time TIME,
+	my_datetime DATETIME
+);
+INSERT INTO test VALUES(CURRENT_DATE(), CURRENT_TIME(), NOW());
+SELECT * FROM test;
+
+------------------------ Unique ------------------------
+CREATE TABLE products(
+	product_id INT PRIMARY KEY,
+	product_name VARCHAR(50),
+	price DECIAML(7, 2),
+);
+
+ALTER TABLE products ADD CONSTRAINT UNIQUE(product_name); --remove duplicate name--
+
+INSERT INTO products VALUES (100, "hamburger", 2.78),
+                            (101, "fries", 0.80),
+														(102, "ice cream", 0.50),
+														(103, "soda", 0.70);
+
