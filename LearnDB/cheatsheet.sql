@@ -61,7 +61,7 @@ SELECT * FROM test;
 CREATE TABLE products(
 	product_id INT PRIMARY KEY,
 	product_name VARCHAR(50),
-	price DECIAML(7, 2),
+	price DECIAML(7, 2)
 );
 
 ALTER TABLE products ADD CONSTRAINT UNIQUE(product_name); --remove duplicate name--
@@ -71,3 +71,22 @@ INSERT INTO products VALUES (100, "hamburger", 2.78),
 														(102, "ice cream", 0.50),
 														(103, "soda", 0.70);
 
+------------------------ Not null ------------------------
+CREATE TABLE products(
+	product_id INT PRIMARY KEY,
+	product_name VARCHAR(50),
+	price DECIAML(7, 2) NOT NULL 
+);
+ALTER TABLE products MODIFY price DECIMAL(7, 2) NOT NULL;
+INSERT INTO employees(
+	employee_id INT PRIMARY KEY,
+	first_name VARCHAR(50),
+	last_name VARCHAR(50),
+	hourly_pay DECIMAL(6, 2),
+	hire_date DATE,
+	CONSTRAINT chk_pay CHECK hourly_pay >= 10
+);
+ALTER TABLE employees ADD CONSTRAINT chk_pay CHECK(price >= 10);
+
+------------------------ Not null ------------------------
+ALTER TABLE products ALTER price SET DEFAULT 0;
