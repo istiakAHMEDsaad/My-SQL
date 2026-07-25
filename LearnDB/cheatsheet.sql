@@ -155,3 +155,13 @@ CREATE TABLE transactions(
 
 ALTER TABLE transactions DROP FOREIGN KEY transactions_id; --remove foreign key find the key id first--
 ALTER TABLE transactions ADD CONSTRAINT fr_tran_key_id FOREIGN KEY customers(customer_id);
+
+
+
+------------------------ Join Table ------------------------
+--inner join--
+SELECT * FROM transactions INNER JOIN customers ON transactions.customer_id = customers.customer_id;
+--spesific column--
+SELECT transaction_id, amount, first_name, last_name FROM transactions INNER JOIN customers ON transactions.customer_id = customers.customer_id;
+
+--left & right join--
