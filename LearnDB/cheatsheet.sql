@@ -4,6 +4,8 @@ USE myDB;
 DROP DATABASE myDB;
 ALTER DATABASE myDB READONLY = 1; --(we can't modify the database until we turned it off again 0/1)--
 
+
+
 ------------------------ Tables ------------------------
 CREATE TABLE employees (
 	employee_id INT PRIMARY KEY,
@@ -22,6 +24,8 @@ ALTER TABLE employees MODIFY COLUMN email VARCHAR(100) DEFAULT "*****@gmail.com"
 ALTER TABLE employees MODIFY email VARCHAR(100) AFTER last_name; --(change position)--
 ALTER TABLE employees DROP COLUMN email;
 
+
+
 ------------------------ Insert Rows ------------------------
 INSERT INTO employees(employee_id, first_name, last_name, hourly_pay, hire_date)
 VALUES (1, "Eugene", "Krabs", 25.50, "2012-04-20"),
@@ -33,20 +37,28 @@ VALUES (1, "Eugene", "Krabs", 25.50, "2012-04-20"),
 INSERT INTO employees (employee_id, first_name, last_name)
 VALUES (6, "Sheldon", "Plankton");
 
+
+
 ------------------------ SELECT ------------------------
 SELECT * FROM employees;
 SELECT first_name, last_name FROM employees;
 SELECT * FROM employees WHERE hourly_pay >= 15;
 SELECT * FROM employees WHERE employee_id = 1
 
+
+
 ------------------------ UPDATE & DELETE ------------------------
 UPDATE employees SET hourly_pay = 18, hire_date = "2013-06-25"  WHERE employee_id = 5;
 DELETE FROM employees WHERE employee_id = 6;
+
+
 
 ------------------------ Auto Commit ------------------------
 SET AUTOCOMMIT = OFF; --(turned off auto commit first)--
 COMMIT; --(commit to save the stage)--
 ROLLBACK; --(if we delete something it will undo)--
+
+
 
 ------------------------ Date & Time ------------------------
 CREATE TABLE test(
@@ -56,6 +68,8 @@ CREATE TABLE test(
 );
 INSERT INTO test VALUES(CURRENT_DATE(), CURRENT_TIME(), NOW());
 SELECT * FROM test;
+
+
 
 ------------------------ Unique ------------------------
 CREATE TABLE products(
@@ -70,6 +84,8 @@ INSERT INTO products VALUES (100, "hamburger", 2.78),
                             (101, "fries", 0.80),
 														(102, "ice cream", 0.50),
 														(103, "soda", 0.70);
+
+
 
 ------------------------ Not null ------------------------
 CREATE TABLE products(
@@ -88,12 +104,54 @@ INSERT INTO employees(
 );
 ALTER TABLE employees ADD CONSTRAINT chk_pay CHECK(price >= 10);
 
+
+
 ------------------------ Not null ------------------------
 ALTER TABLE products ALTER price SET DEFAULT 0;
 
+
+
 ------------------------ Primary Key ------------------------
 CREATE TABLE transactions(
-	transaction_id INT PRIMARY_KEY,
+	transaction_id INT PRIMARY KEY,
 	amount DECIMAL(7, 2)
 );
 ALTER TABLE transactions ADD CONSTRAINT set_primay PRIMARY KEY(transaction_id); --if you forgot to add primary key--
+
+
+
+------------------------ Auto Increment ------------------------
+CREATE TABLE tansactions(
+	transaction_id INT PRIMARY KEY AUTO INCREMENT,
+	amount DECIMAL(7, 2)
+);
+
+INSERT INTO transactions(amount) VALUES (234);
+SELECT * FROM transactions;
+
+
+
+------------------------ Auto Increment ------------------------
+CREATE TABLE customers (
+	customer_id INT PRIMARY KEY AUTO INCREMENT,
+	first_name VARCHAR(50),
+	last_name VARCHAR(50)
+);
+
+
+
+------------------------ FOREGIN KEY ------------------------
+INSERT INTO customers(first_name, last_name)
+VALUES ("Fred", "Fish"),
+       ("Larry", "Lobster"),
+			 ("Bubble", "Bass");
+
+CREATE TABLE transactions(
+	transaction_id INT PRIMARY KEY AUTO INCREMENT,
+	amount DECIMAL(7, 2),
+	customer_id INT,
+	FOREIGN KEY(customer_id) REFERENCES customers(customer_id)
+);
+
+ALTER TABLE transactions DROP FOREIGN KEY transactions_id; --remove foreign key find the key id first--
+ALTER TABLE transactions ADD CONSTRAINT fr_tran_key_id FOREIGN KEY customers(customer_id);
