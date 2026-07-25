@@ -75,9 +75,9 @@ INSERT INTO products VALUES (100, "hamburger", 2.78),
 CREATE TABLE products(
 	product_id INT PRIMARY KEY,
 	product_name VARCHAR(50),
-	price DECIAML(7, 2) NOT NULL 
+	price DECIMAL(7, 2) NOT NULL 
 );
-ALTER TABLE products MODIFY price DECIMAL(7, 2) NOT NULL;
+ALTER TABLE products MODIFY price DECIMAL(7, 2) NOT NULL; --if you forgot to add--
 INSERT INTO employees(
 	employee_id INT PRIMARY KEY,
 	first_name VARCHAR(50),
@@ -90,3 +90,10 @@ ALTER TABLE employees ADD CONSTRAINT chk_pay CHECK(price >= 10);
 
 ------------------------ Not null ------------------------
 ALTER TABLE products ALTER price SET DEFAULT 0;
+
+------------------------ Primary Key ------------------------
+CREATE TABLE transactions(
+	transaction_id INT PRIMARY_KEY,
+	amount DECIMAL(7, 2)
+);
+ALTER TABLE transactions ADD CONSTRAINT set_primay PRIMARY KEY(transaction_id); --if you forgot to add primary key--
