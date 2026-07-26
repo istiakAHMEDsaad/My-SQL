@@ -2,7 +2,7 @@
 CREATE DATABASE myDB;
 USE myDB;
 DROP DATABASE myDB;
-ALTER DATABASE myDB READONLY = 1; --(we can't modify the database until we turned it off again 0/1)--
+ALTER DATABASE myDB READ ONLY = 1; --(we can't modify the database until we turned it off again 0/1)--
 
 
 
@@ -42,7 +42,7 @@ VALUES (6, "Sheldon", "Plankton");
 ------------------------ SELECT ------------------------
 SELECT * FROM employees;
 SELECT first_name, last_name FROM employees;
-SELECT * FROM employees WHERE hourly_pay >= 15;
+SELECT * FROM employees WHERE (hourly_pay >= 15);
 SELECT * FROM employees WHERE employee_id = 1
 
 
@@ -75,7 +75,7 @@ SELECT * FROM test;
 CREATE TABLE products(
 	product_id INT PRIMARY KEY,
 	product_name VARCHAR(50),
-	price DECIAML(7, 2)
+	price DECIMAL(7, 2)
 );
 
 ALTER TABLE products ADD CONSTRAINT UNIQUE(product_name); --remove duplicate name--
@@ -100,9 +100,9 @@ INSERT INTO employees(
 	last_name VARCHAR(50),
 	hourly_pay DECIMAL(6, 2),
 	hire_date DATE,
-	CONSTRAINT chk_pay CHECK hourly_pay >= 10
+	CONSTRAINT chk_pay CHECK (hourly_pay >= 10)
 );
-ALTER TABLE employees ADD CONSTRAINT chk_pay CHECK(price >= 10);
+ALTER TABLE employees ADD CONSTRAINT chk_pay CHECK(hourly_pay >= 10);
 
 
 
@@ -121,47 +121,55 @@ ALTER TABLE transactions ADD CONSTRAINT set_primay PRIMARY KEY(transaction_id); 
 
 
 ------------------------ Auto Increment ------------------------
-CREATE TABLE tansactions(
-	transaction_id INT PRIMARY KEY AUTO INCREMENT,
+CREATE TABLE transactions(
+	transaction_id INT PRIMARY KEY AUTO_INCREMENT,
 	amount DECIMAL(7, 2)
 );
 
 INSERT INTO transactions(amount) VALUES (234);
 SELECT * FROM transactions;
 
-
-
------------------------- Auto Increment ------------------------
 CREATE TABLE customers (
-	customer_id INT PRIMARY KEY AUTO INCREMENT,
+	customer_id INT PRIMARY KEY AUTO_INCREMENT,
 	first_name VARCHAR(50),
 	last_name VARCHAR(50)
 );
 
 
 
------------------------- FOREGIN KEY ------------------------
+------------------------ FOREIGN KEY ------------------------
 INSERT INTO customers(first_name, last_name)
 VALUES ("Fred", "Fish"),
        ("Larry", "Lobster"),
 			 ("Bubble", "Bass");
 
 CREATE TABLE transactions(
-	transaction_id INT PRIMARY KEY AUTO INCREMENT,
+	transaction_id INT PRIMARY KEY AUTO_INCREMENT,
 	amount DECIMAL(7, 2),
 	customer_id INT,
-	FOREIGN KEY(customer_id) REFERENCES customers(customer_id)
+	CONSTRAINT fk_customer FOREIGN KEY(customer_id) REFERENCES customers(customer_id)
 );
 
-ALTER TABLE transactions DROP FOREIGN KEY transactions_id; --remove foreign key find the key id first--
-ALTER TABLE transactions ADD CONSTRAINT fr_tran_key_id FOREIGN KEY customers(customer_id);
+ALTER TABLE transactions ADD CONSTRAINT fk_customer FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
 
+--remove foreign key find the key id first--
+ALTER TABLE transactions DROP FOREIGN KEY fk_customer; --or--
+ALTER TABLE transactions DROP CONSTRAINT fk_customer;
 
 
 ------------------------ Join Table ------------------------
---inner join--
+--inner, right, left join--
 SELECT * FROM transactions INNER JOIN customers ON transactions.customer_id = customers.customer_id;
 --spesific column--
 SELECT transaction_id, amount, first_name, last_name FROM transactions INNER JOIN customers ON transactions.customer_id = customers.customer_id;
 
---left & right join--
+
+
+------------------------ Functions ------------------------
+--COUNT, MIN, MAX, AVG, SUM, CONCAT--
+SELECT CONUT(cusomer_id) AS "count" FROM transactions; --where condition if needed--
+
+
+
+------------------------ And, Or, Not ------------------------
+ALTER TABLE employees
