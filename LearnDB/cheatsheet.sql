@@ -82,10 +82,8 @@ ALTER TABLE products ADD CONSTRAINT UNIQUE(product_name); --remove duplicate nam
 
 INSERT INTO products VALUES (100, "hamburger", 2.78),
                             (101, "fries", 0.80),
-														(102, "ice cream", 0.50),
-														(103, "soda", 0.70);
-
-
+                            (102, "ice cream", 0.50),
+                            (103, "soda", 0.70)
 
 ------------------------ Not null ------------------------
 CREATE TABLE products(
@@ -98,7 +96,7 @@ INSERT INTO employees(
 	employee_id INT PRIMARY KEY,
 	first_name VARCHAR(50),
 	last_name VARCHAR(50),
-	hourly_pay DECIMAL(6, 2),
+	DECIMAL(6, 2),
 	hire_date DATE,
 	CONSTRAINT chk_pay CHECK (hourly_pay >= 10)
 );
@@ -171,5 +169,20 @@ SELECT CONUT(cusomer_id) AS "count" FROM transactions; --where condition if need
 
 
 
------------------------- And, Or, Not ------------------------
-ALTER TABLE employees
+------------------------ Logical Operator and, or, not ------------------------
+ALTER TABLE employees ADD COLUMN job VARCHAR (50) AFTER hourly_pay;
+UPDATE employees SET job = "manager" WHERE employee_id = 1;
+SELECT * FROM employees WHERE hire_date < "2026-04-27" AND job = "cook";
+SELECT * FROM employees WHERE NOT job = "manager" AND NOT job = "asst. manager";
+SELECT * FROM employees WHERE hire_date BETWEEN "2025-01-01" AND "2026-01-01";
+SELECT * FROM employees WHERE job IN ("cook", "cashier", "janitor");
+
+
+
+------------------------ Wild card ------------------------
+SELECT * FROM employees WHERE first_name LIKE "s%";
+SELECT * FROM employees WHERE last_name LIKE "%s";
+SELECT * FROM employees WHERE hire_date = "2023%";
+-- _oo_ this will look for 4 words start & end with random word --
+SELECT * FROM employees WHERE job LIKE "_cook"; --undershalsh means random character--
+SELECT * FROM employees WHERE hire_date LIKE "____-01-01"
