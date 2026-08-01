@@ -19,6 +19,7 @@ SELECT * FROM employees; --(select all from a table)--
 RENAME TABLE employees TO workers;
 
 ALTER TABLE employees ADD phone_number VARCHAR(15);
+ALTER TABLE employees ADD job VARCHAR(50) AFTER hourly_pay;
 ALTER TABLE employees RENAME COLUMN phone_number TO email; --(rename coulmn name)--
 ALTER TABLE employees MODIFY COLUMN email VARCHAR(100) DEFAULT "*****@gmail.com";
 ALTER TABLE employees MODIFY email VARCHAR(100) AFTER last_name; --(change position)--
@@ -114,7 +115,8 @@ CREATE TABLE transactions(
 	transaction_id INT PRIMARY KEY,
 	amount DECIMAL(7, 2)
 );
-ALTER TABLE transactions ADD CONSTRAINT set_primay PRIMARY KEY(transaction_id); --if you forgot to add primary key--
+ALTER TABLE transactions
+ADD CONSTRAINT set_primay PRIMARY KEY(transaction_id); --if you forgot to add primary key--
 
 
 
@@ -148,11 +150,13 @@ CREATE TABLE transactions(
 	CONSTRAINT fk_customer FOREIGN KEY(customer_id) REFERENCES customers(customer_id)
 );
 
-ALTER TABLE transactions ADD CONSTRAINT fk_customer FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
+ALTER TABLE transactions
+ADD CONSTRAINT fk_customer FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
 
 --remove foreign key find the key id first--
 ALTER TABLE transactions DROP FOREIGN KEY fk_customer; --or--
 ALTER TABLE transactions DROP CONSTRAINT fk_customer;
+
 
 
 ------------------------ Join Table ------------------------
@@ -203,3 +207,20 @@ SELECT * FROM customers ORDER BY last_name DESC LIMIT 25, 15;
 
 ------------------------ Union ------------------------
 SELECT * FROM income UNION SELECT * FROM expense; -- UNION ALL allows dupliate --
+
+
+
+------------------------ Self Join ------------------------
+ALTER TABLE customers ADD referral_id INT;
+UPDATE customers SET referral_id = 1 WHERE customer_id = 2; 
+UPDATE customers SET referral_id = 2 WHERE customer_id = 3; 
+UPDATE customers SET referral_id = 2 WHERE customer_id = 4; 
+
+SELECT * FROM customers AS a INNER JOIN customers AS b ON a.referral_id = b.customer_id;
+
+SELECT a.customer_id, a.first_name, a.last_name,
+CONCAT(b.first_name, " ", b.last_name) AS "referred_by"
+FROM customers AS a
+INNER JOIN customers AS b
+ON a.referral_id = b.referral_id;
+
