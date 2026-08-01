@@ -186,3 +186,20 @@ SELECT * FROM employees WHERE hire_date = "2023%";
 -- _oo_ this will look for 4 words start & end with random word --
 SELECT * FROM employees WHERE job LIKE "_cook"; --undershalsh means random character--
 SELECT * FROM employees WHERE hire_date LIKE "____-01-01"
+
+
+
+------------------------ Orders ------------------------
+SELECT * FROM employees ORDER BY last_name DESC; -- ASC --
+SELECT * FROM transactions ORDER BY amount, cusomer_id;
+
+
+
+------------------------ Limit ------------------------
+SELECT * FROM customers LIMIT 4;
+SELECT * FROM customers ORDER BY last_name DESC LIMIT 25, 15;
+
+
+
+------------------------ Union ------------------------
+SELECT * FROM income UNION SELECT * FROM expense; -- UNION ALL allows dupliate --
