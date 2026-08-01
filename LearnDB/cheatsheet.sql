@@ -19,7 +19,6 @@ SELECT * FROM employees; --(select all from a table)--
 RENAME TABLE employees TO workers;
 
 ALTER TABLE employees ADD phone_number VARCHAR(15);
-ALTER TABLE employees ADD job VARCHAR(50) AFTER hourly_pay;
 ALTER TABLE employees RENAME COLUMN phone_number TO email; --(rename coulmn name)--
 ALTER TABLE employees MODIFY COLUMN email VARCHAR(100) DEFAULT "*****@gmail.com";
 ALTER TABLE employees MODIFY email VARCHAR(100) AFTER last_name; --(change position)--
@@ -37,6 +36,7 @@ VALUES (1, "Eugene", "Krabs", 25.50, "2012-04-20"),
 
 INSERT INTO employees (employee_id, first_name, last_name)
 VALUES (6, "Sheldon", "Plankton");
+ALTER TABLE employees ADD job VARCHAR(50) AFTER hourly_pay;
 
 
 
@@ -224,3 +224,16 @@ FROM customers AS a
 INNER JOIN customers AS b
 ON a.referral_id = b.referral_id;
 
+UPDATE employees
+SET JOB = CASE
+	WHEN employee_id = 1 THEN "manager"
+	WHEN employee_id = 2 THEN "cashier"
+	WHEN employee_id = 3 THEN "cook"
+	WHEN employee_id = 4 THEN "cook"
+	WHEN employee_id = 5 THEN "asst. manager"
+	WHEN employee_id = 6 THEN "janitor"
+END;
+
+SELECT a.first_name, a.last_name, CONCAT(b.first_name, " ", b.last_name) AS "reports to"
+FROM employees AS a INNER JOIN employees AS b
+ON a.supervisor_id = b.employee_id
