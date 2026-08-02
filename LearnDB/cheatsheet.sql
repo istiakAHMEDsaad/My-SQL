@@ -237,3 +237,17 @@ END;
 SELECT a.first_name, a.last_name, CONCAT(b.first_name, " ", b.last_name) AS "reports to"
 FROM employees AS a INNER JOIN employees AS b
 ON a.supervisor_id = b.employee_id
+
+
+
+------------------------ View ------------------------
+CREATE VIEW employee_attendance AS
+SELECT first_name, last_name
+FROM employees;
+
+SELECT * FROM employee_attendance ORDER BY last_name ASC;
+DROP VIEW employee_attendance;
+
+ALTER TABLE customers ADD COULMN email VARCHAR(50);
+UPDATE customers SET email = "xyz"
+WHERE customer_id = 1;
